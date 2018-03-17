@@ -8,6 +8,16 @@ let SHOW_LOG_MSG = true,
     msg,
     countM = 1000,
     TIMEOUT_RECONNECT = 5000; // время переподключения к сокетам
+
+
+if(window.location.href.indexOf("localhost") > -1)
+{
+    socket_URL = "ws://localhost:8081"
+}
+else if(window.location.href.indexOf("89.31.33.164") > -1){
+    socket_URL = "ws://89.31.33.164:8081"
+}
+
 function checkSession() {
     if(!$.cookie('session_hash')) {
         SESSION_INFO = {};
