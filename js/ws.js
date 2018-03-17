@@ -6,20 +6,23 @@ let SHOW_LOG_MSG = true,
     socket_URL = "ws://localhost:8081",
     socket,
     msg,
+    LOCAL = true,
     countM = 1000,
     TIMEOUT_RECONNECT = 5000; // время переподключения к сокетам
 
 
 if(window.location.href.indexOf("localhost") > -1)
 {
-    socket_URL = "ws://localhost:8081"
+    socket_URL = "ws://localhost:8081";
+    LOCAL = true;
 }
 else if(window.location.href.indexOf("89.31.33.164") > -1){
-    socket_URL = "ws://89.31.33.164:8081"
+    socket_URL = "ws://89.31.33.164:8081";
+    LOCAL = false;
 }
 
 function checkSession() {
-    if(!$.cookie('session_hash')) {
+    if(!$.cookie('session_hash') && window.location.href.indexOf("login") == 0) {
         SESSION_INFO = {};
         window.location.href='../html/login.html';
     }
