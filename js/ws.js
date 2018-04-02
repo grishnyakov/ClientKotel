@@ -1,6 +1,7 @@
 let SESSION_INFO = {};
 let counterMessage = 10;
 var SESSION_HASH = $.cookie('session_hash');
+let isLoginPage = window.location.href.indexOf("login") > -1;
 let SHOW_LOG_MSG = true,
     STOP_socket = false,
     socket_URL = "ws://localhost:8081",
@@ -11,8 +12,7 @@ let SHOW_LOG_MSG = true,
     TIMEOUT_RECONNECT = 5000; // время переподключения к сокетам
 
 
-if(window.location.href.indexOf("localhost") > -1)
-{
+if(window.location.href.indexOf("localhost") > -1) {
     socket_URL = "ws://localhost:8081";
     LOCAL = true;
 }
@@ -22,7 +22,7 @@ else if(window.location.href.indexOf("89.31.33.164") > -1){
 }
 
 function checkSession() {
-    if(!$.cookie('session_hash') && window.location.href.indexOf("login") == 0) {
+    if(!$.cookie('session_hash') && !isLoginPage) {
         SESSION_INFO = {};
         window.location.href='../html/login.html';
     }
@@ -56,7 +56,7 @@ function webSocket() {
     };
     socket.onopen = function () {
         console.info('socket OPENED', socket_URL);
-        if(SESSION_HASH) MSG.request.SessionInfo();
+        if(SESSION_HASH && !isLoginPage) MSG.request.SessionInfo();
     };
 
     socket.stop = function (time) {

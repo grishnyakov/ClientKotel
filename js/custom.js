@@ -1,4 +1,9 @@
-webSocket();
+checkSession();
+$(document).ready(function () {
+
+    webSocket();
+})
+
 
 // отправить сообщение из формы
 $('#refreshDevicesBtn').click(function () {
@@ -19,6 +24,7 @@ $('.add_new_device').click(function () {
 
 $('#signOut').click(function () {
 
+    $.removeCookie('session_hash');
     let struct = {
         IdMessage: counterMessage,
         Table: "auth",
