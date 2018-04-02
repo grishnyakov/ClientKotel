@@ -3,16 +3,18 @@
  */
 
 var messages;
-function Message(id,dev_id) {
-    this.id = id;
-    this.dev_id = dev_id;
-
+function Message(params) {
+    this.params = params;
 }
 
 Message.list = [];
 
-MSG.request.request_messages = function () {
-    let array_devices = [1234567890];
+MSG.request.messages = function () {
+    let array_devices = [];
+    for(let index in Device.list) {
+        array_devices.push(Device.list[index].params.id);
+    }
+
     let message_toserver = {
         IdMessage: counterMessage,
         Table: "messages",

@@ -1,17 +1,16 @@
 /**
  * Created by Sergio on 02.04.2018.
  */
-var devices; //устройства юзера
-function Device(id,type) {
-    this.id = id;
-    this.type = type;
+
+function Device(params) {
+    this.params = params;
 }
 
 Device.list = [];
 
 
 
-MSG.request.request_devices = function () {
+MSG.request.devices = function () {
     let message_toserver = {
         IdMessage: counterMessage,
         Table: "devices",
@@ -27,11 +26,14 @@ MSG.request.request_devices = function () {
 };
 MSG.get.devices = function (data) {
     console.log("i recive devices:",data);
-    devices = data[0];
+
     tableDevices.data().clear()
-    if(devices) {
-        for(let dev in devices){
-            let row = [devices[dev].id,devices[dev].id_type,'-','-','-'];
+    Device.list = [];
+
+    if(data[0]) {
+        for(let dev in data[0]){
+            Device.list.push( new Device(data[0][dev]));
+            let row = [data[0][dev].id,data[0][dev].id_type,'-','-','-'];
             tableDevices.row.add(row).draw(false)
         }
     }
@@ -64,6 +66,6 @@ MSG.get.register_device = function (data) {
     else if(data.status === "OK"){
         alert("Устройство успешно привязано к пользователю");
         $("#addDeviceModal").modal('hide');
-        MSG.request.request_devices();
+        MSG.request.devices();
     }
 };

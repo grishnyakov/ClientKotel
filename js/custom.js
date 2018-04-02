@@ -1,16 +1,15 @@
 checkSession();
 $(document).ready(function () {
-
     webSocket();
 })
 
 
 // отправить сообщение из формы
 $('#refreshDevicesBtn').click(function () {
-    MSG.request.request_devices();
+    MSG.request.devices();
 });
 $('#refreshMessagesBtn').click(function () {
-    MSG.request.request_messages();
+    MSG.request.messages();
 });
 
 
@@ -46,7 +45,7 @@ $('#signOut').click(function () {
 
 function refreshMessages() {
     let dev_id = $('#dev_id')[0].valueAsNumber;
-    MSG.request.request_messages();
+    MSG.request.messages();
 };
 
 // показать сообщение в div#subscribe
@@ -71,9 +70,6 @@ $('.nav-link').click(function () {
     }
 });
 
-function openMyDevices() {
-
-}   //показать настройки мои устройства
 function openMessages() {
     console.log("Messages");
     let content = `
